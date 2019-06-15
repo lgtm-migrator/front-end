@@ -53,50 +53,89 @@ const menuItems = [
   }
 ];
 
-class MenuItem extends Component{
-    render(){
-      // console.log(this.props)
-      return(
-        <li>
-        <span>{this.props.item.name}</span>
-        <span>{this.props.item.price}</span>
-        <button onClick={this.handleSubmit}>Order</button>
-        </li>
-      )};
+class Order extends Component {
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      subTotal: "",
+      num1: "",
+      num2: ""
+    };
+
+    this.handlenum1Change = this.handlenum1Change.bind(this);
+    this.handlenum2Change = this.handlenum2Change.bind(this);
+  }
+
+  handelenum1Change(event) {
+    this.setState({num1: event.target.value});
+  }
+  handelenum2Change(event) {
+    this.setState({num2: event.target.value});
+  }
+  addAction(event) {
+    this.setState({num1: event.target.value});
+    this.setState({num2: event.target.value});
+
+    this.setState({subtotal: event.target.value});
+  }
+
+  render() {
+    console.log(this.props)
+    return (<form>
+      <label>
+        Subtotal
+        <input type="number" onChange={this.handlenum1Change}/>
+        <input type="number" onChange={this.handlenum2Change}/>
+
+        <input type="button" onClick={this.addAction} value="Order"/>
+        <input type="text" value={this.stat.result} readOnly="readOnly"/>
+      </label>
+    </form>);
+  }
+}
+
+class MenuItem extends Component {
+  render() {
+    // console.log(this.props)
+    return (<li>
+      <span className="item-name">{this.props.item.name}</span>
+      <span className="item-price">{this.props.item.price}</span>
+      <button className="order" onClick={this.handleSubmit}>Order</button>
+    </li>)
+  };
 
 }
-    class Menu extends Component {
-      render() {
+class Menu extends Component {
+  render() {
 
-        let Menu = this.props.menuItems.map(function(item, index){
-          return <MenuItem key={index} item={item}/>
-        });
-        return(<div>{Menu}</div>)
-      }
+    let Menu = this.props.menuItems.map(function(item, index) {
+      return <MenuItem key={index} item={item}/>
+    });
+    return (<div>{Menu}</div>)
+  }
+}
+
+class App extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      menuItems: []
     }
+  }
 
+  componentDidMount() {
+    this.setState({menuItems: menuItems});
+  }
 
-    class App extends Component {
+  render() {
+    console.log(this.state.menuItems);
+    return (<div>
+      <Menu menuItems={this.state.menuItems}/>
+    </div>)
+  }
+}
 
-      constructor(props) {
-        super(props);
-        this.state = {
-          menuItems: []
-        }
-      }
-
-      componentDidMount() {
-        this.setState({menuItems: menuItems});
-      }
-
-      render() {
-        console.log(this.state.menuItems);
-        return (<div>
-          <Menu menuItems={this.state.menuItems}/>
-        </div>)
-      }
-    }
-
-
-    export default App;
+export default App;

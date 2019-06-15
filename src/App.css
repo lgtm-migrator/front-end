@@ -31,3 +31,18 @@
     transform: rotate(360deg);
   }
 }
+li {
+  list-style-type: none;
+  height: auto
+}
+.item-name {
+  padding-left: 250px;
+}
+.item-price{
+  padding-left: 15px;
+}
+button.order{
+  padding-left: 10px;
+  margin-left: 10px;
+
+}
